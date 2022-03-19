@@ -1,1 +1,1 @@
-asdf
+[Määrittelydokumentti](dokumentaatio/maarittely.md)
