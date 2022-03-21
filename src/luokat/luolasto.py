@@ -1,5 +1,20 @@
-SEINA = '#'
+RUUTUTYYPIT = {'lattia': '.',
+               'kivi': '#',
+               'seinä': ['─', '│', '┌', '┐', '└', '┘', '├', '┤', '┬', '┴']}
+# ─ 2500
+# │ 2502
+# ┌ 250C
+# ┐ 2510
+# └ 2514
+# ┘ 2518
+# ├ 251C
+# ┤ 2524
+# ┬ 252C
+# ┴ 2534
+
+# EI_LATTIA = '/'
 LATTIA = '.'
+SEINA = '#'
 
 class Luolasto:
     def __init__(self, leveys=77, korkeus=19):
@@ -8,7 +23,7 @@ class Luolasto:
         self.tayta()
 
     def tayta(self):
-        self._kartta = [[SEINA for _ in range(self._leveys)] for _ in range(self._korkeus) ]
+        self.kartta = [[SEINA for _ in range(self._leveys)] for _ in range(self._korkeus) ]
 
     def kaiva(self, x, y):
         """Muuttaa annetun ruudun lattiaksi
@@ -17,7 +32,7 @@ class Luolasto:
             y (_type_): _description_
             x (_type_): _description_
         """
-        self._kartta[y][x] = LATTIA
+        self.kartta[y][x] = LATTIA
 
     def rakenna(self, x, y):
         """Muuttaa annetun ruudun seinäksi
@@ -26,7 +41,7 @@ class Luolasto:
             y (_type_): _description_
             x (_type_): _description_
         """
-        self._kartta[y][x] = SEINA
+        self.kartta[y][x] = SEINA
 
     @property
     def leveys(self):
@@ -45,7 +60,7 @@ class Luolasto:
         self._korkeus = korkeus
 
     def nayta(self):
-        for rivi in self._kartta:
+        for rivi in self.kartta:
             print(''.join(rivi))
 
 
