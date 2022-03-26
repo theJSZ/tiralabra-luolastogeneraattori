@@ -1,3 +1,6 @@
+from luokat.huone import Huone
+
+
 RUUTUTYYPIT = {'lattia': '.',
                'kivi': '#',
                'seinä': ['─', '│', '┌', '┐', '└', '┘', '├', '┤', '┬', '┴']}
@@ -21,6 +24,7 @@ class Luolasto:
         self._leveys = leveys
         self._korkeus = korkeus
         self.tayta()
+        self._huoneet = []
 
     def tayta(self):
         self.kartta = [[SEINA for _ in range(self._leveys)] for _ in range(self._korkeus) ]
@@ -33,6 +37,12 @@ class Luolasto:
             x (_type_): _description_
         """
         self.kartta[y][x] = LATTIA
+
+    def kaiva_huone(self, huone: Huone):
+        print(f'kaivetaan: y {huone.y} x {huone.x} korkeus {huone.korkeus} leveys {huone.leveys}')
+        for y in range(huone.y, huone.y+huone.korkeus):
+            for x in range(huone.x, huone.x+huone.leveys):
+                self.kaiva(x, y)
 
     def rakenna(self, x, y):
         """Muuttaa annetun ruudun seinäksi
@@ -58,6 +68,13 @@ class Luolasto:
     @korkeus.setter
     def korkeus(self, korkeus):
         self._korkeus = korkeus
+
+    @property
+    def huoneet(self):
+        return self._huoneet
+
+    def lisaa_huone(self, huone: Huone):
+        self._huoneet.append(huone)
 
     def nayta(self):
         for rivi in self.kartta:

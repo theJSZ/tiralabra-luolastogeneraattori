@@ -6,6 +6,9 @@ def merkkaa(y, x, luolasto: Luolasto):
     if ruutu == LATTIA:
         return '.'
 
+    if ruutu == 'o':
+        return 'o'
+
     naapurit = [(-1,-1), (0,-1), (1, -1),
                 (-1, 0), (1, 0),
                 (-1, 1), (0, 1), (1, 1)]
@@ -25,10 +28,14 @@ def merkkaa(y, x, luolasto: Luolasto):
                         naapurit_seinaa_lista.append(indeksi)
                     else:
                         naapurit_lattiaa.append(indeksi)
-            
 
         if naapurit_yht == naapurit_seinaa:
             return ' '
+
+# naapurit:
+# 035
+# 1.6
+# 247
 
 # jos ylävasemmalla ei seinää mutta kaikki muut seinää:
 #   ┘
@@ -87,10 +94,7 @@ def merkkaa(y, x, luolasto: Luolasto):
         if 4 in naapurit_lattiaa and 6 in naapurit_lattiaa:
             if 3 not in naapurit_lattiaa and 1 not in naapurit_lattiaa:
                 return '┘'
-# naapurit:
-# 035
-# 1.6
-# 247
+
 
 # Jos seinää kaikissa pääsuunnissa paitsi yhdessä:
 #   ┴ * neljä suuntaa
@@ -151,8 +155,10 @@ def stilisoi(luolasto: Luolasto):
                 if tuloste[y][x] in [' ', '┐', '└', '┘', '┌', '┬', '┴', '├', '┤', '│', '─', '.']:
                     merkattu[y][x] = True
                     merkatut += 1
+                elif tuloste[y][x] == 'o':
+                    continue
                 else:
-                    # print('error')
+                    print('error')
                     tuloste[y][x] = ' '
     # for y in range(luolasto.korkeus):
     #     for x in range(luolasto.leveys):
@@ -169,8 +175,8 @@ def stilisoi(luolasto: Luolasto):
     for rivi in tuloste:
         print(''.join(rivi))
 
-    print('merkattuja:', merkatut)
-    print(f'koko: {luolasto.leveys * luolasto.korkeus}')
+    # print('merkattuja:', merkatut)
+    # print(f'koko: {luolasto.leveys * luolasto.korkeus}')
 ##########
 #......#.#
 #........#

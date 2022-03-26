@@ -1,4 +1,6 @@
 import random
+from time import sleep
+import os
 from luokat.luolasto import Luolasto
 
 def korjattu_leveys(leveys, luolasto):
@@ -17,7 +19,7 @@ def korjattu_y(y, luolasto, leveys):
         return min_y
     return y
 
-def suunnattu_luola(luolasto: Luolasto, leveys = 3, mutkaisuus = 25, vaihtelu = 25, suunta = 1):
+def suunnattu_luola(luolasto: Luolasto, leveys = 3, mutkaisuus = 25, vaihtelu = 25, suunta = 1, visualisointi: bool = False):
     """Hyvin yksinkertainen algoritmi. Luo vahvasti yhtenäisen luolaston
     joka etenee sivusuunnassa, mutkitellen ja käytävän leveyttä vaihdellen
     annettujen parametrien mukaan satunnaisesti. Useamman kerran ajettuna
@@ -62,10 +64,24 @@ def suunnattu_luola(luolasto: Luolasto, leveys = 3, mutkaisuus = 25, vaihtelu = 
         y = korjattu_y(y, luolasto, leveys)
             
         for y2 in range(y - (leveys-1)//2, y + 1 + (leveys-1)//2):
-            if suunta == -1:
-                luolasto.kaiva(luolasto.leveys-1-x2, y2)
+            if suunta == 0:
+                kaivettava_x = luolasto.leveys-1-x2
             else:
-                luolasto.kaiva(x2, y2)
+                kaivettava_x = x2
+
+            if visualisointi:
+                luolasto.kartta[y2][kaivettava_x].sisalto = 'o'
+            # if suunta == -1:
+            #     luolasto.kaiva(luolasto.leveys-1-x2, y2)
+            # else:
+            #     luolasto.kaiva(x2, y2)
+            luolasto.kaiva(kaivettava_x, y2)
+        if visualisointi:
+            os.system('clear')
+            luolasto.nayta()
+            sleep(0.1)
+            for y2 in range(y - (leveys-1)//2, y + 1 + (leveys-1)//2):
+                luolasto.kartta[y2][kaivettava_x].sisalto = None
 
         leveyden_muutos = (random.randint(1, 100) <= vaihtelu)
         if leveyden_muutos:
