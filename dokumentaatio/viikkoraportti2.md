@@ -1,0 +1,4 @@
+# Viikkoraportti 2
+Tällä viikolla aloitin parista helposta algoritmista ja kolmanneksi aloin implementoida Nethackin BSP-algoritmia kuten sen käsitin lukemistani lähteistä joissa sen toimintaa kuvailtiin. Wave Function Collapsea en saanut toimimaan oikein enkä järkevällä vauhdilla joten luovuin siitä tavoitteesta. Lisäksi käytin jonkin verran aikaa siihen että sain luolien seinät piirtymään jotenkuten nätisti. Vilkaisin myös Nethackin lähdekoodia mutta se on liian vaikeaselkoista ollakseen avuksi. BSP on nyt siinä vaiheessa että se pyörii kunnes on synnyttänyt luolaston jossa 7-12 huonetta. Aikaa on mennyt ehkä 10 tuntia.
+
+Seuraavaksi akuutein tavoite on saada A*-reitinhaku toimimaan käytävien rakentamiseksi BSP-huoneiden tai drunkard's walkin tai minkä tahansa algoritmin jäljiltä epäyhtenäisen luolaston komponenttien välille. Koodia ei ole juurikaan kommentoitu ja se on kaikin puolin aivan levällään ja huonoa; yritän saada sen ensin toimimaan ja siivota sitten.
