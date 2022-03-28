@@ -17,25 +17,36 @@ class KaytavanKaivaja:
         for n in range(1, len(huoneet)):
             self.kaiva_kaytava(huoneet[n-1], huoneet[n])
 
+        for _ in range(2, 5):
+            lahtohuone = random.choice(huoneet)
+            kohdehuone = lahtohuone
+            while kohdehuone == lahtohuone:
+                kohdehuone = random.choice(huoneet)
+            uudet_painot = {'lattia': 3,
+                            'käytävä': 1,
+                            'kallio': 1.5,
+                            'seinä': 6}
+            self.kaiva_kaytava(lahtohuone, kohdehuone, uudet_painot)
+
     def kaiva_kaytava(self, lahtohuone, kohdehuone, painot: dict = None):
         if not painot:
-            painot = {'lattia': 0,
-                       'käytävä': 2,
-                       'kallio': 20,
-                       'seinä': 100}
+            painot = {'lattia': 3,
+                       'käytävä': 1,
+                       'kallio': 2,
+                       'seinä': 6}
 
         # print(f'kaivetaan {lahtohuone} -> {kohdehuone}')
 
         # Nethack ilmeisesti yhdistää huoneiden keskipisteet
-        # lahto_y = lahtohuone.keskipiste()[0]
-        # lahto_x = lahtohuone.keskipiste()[1]
-        # kohde_y = kohdehuone.keskipiste()[0]
-        # kohde_x = kohdehuone.keskipiste()[1]
+        lahto_y = lahtohuone.keskipiste()[0]
+        lahto_x = lahtohuone.keskipiste()[1]
+        kohde_y = kohdehuone.keskipiste()[0]
+        kohde_x = kohdehuone.keskipiste()[1]
 
-        lahto_y = random.randint(lahtohuone.y+1, lahtohuone.y + lahtohuone.korkeus-2)
-        lahto_x = random.randint(lahtohuone.x+1, lahtohuone.x + lahtohuone.leveys-2)
-        kohde_y = random.randint(kohdehuone.y+1, kohdehuone.y + kohdehuone.korkeus-2)
-        kohde_x = random.randint(kohdehuone.x+1, kohdehuone.x + kohdehuone.leveys-2)
+        # lahto_y = random.randint(lahtohuone.y+1, lahtohuone.y + lahtohuone.korkeus-2)
+        # lahto_x = random.randint(lahtohuone.x+1, lahtohuone.x + lahtohuone.leveys-2)
+        # kohde_y = random.randint(kohdehuone.y+1, kohdehuone.y + kohdehuone.korkeus-2)
+        # kohde_x = random.randint(kohdehuone.x+1, kohdehuone.x + kohdehuone.leveys-2)
 
 
         # print(f'{lahto_y, lahto_x} -> {kohde_y, kohde_x}')
@@ -81,7 +92,7 @@ class KaytavanKaivaja:
                 if uusi_x < 0 or uusi_x >= self.luolasto.leveys:
                     continue
                 
-                uusi_hinta = hinta[sijainti[0]][sijainti[1]] + painot[self.luolasto.kartta[uusi_y][uusi_x].tyyppi]
+                uusi_hinta = hinta[sijainti[0]][sijainti[1]] + painot[self.luolasto.kartta[uusi_y][uusi_x].tyyppi]*(random.random()/10+0.95)
                 if uusi_hinta < hinta[uusi_y][uusi_x]:
                     hinta[uusi_y][uusi_x] = uusi_hinta
                     kautta[uusi_y][uusi_x] = sijainti
