@@ -4,7 +4,7 @@ Saat seuraavat vaihtoehdot:
 1. uusi luolasto
   - Kysyy halutun leveyden ja korkeuden. Leveys on rajattu terminaalin leveyden takia
 2. bsp rooms
-  - Luo 7-12 huonetta. Ei tarjoa toistaiseksi mitään vaihtoehtoja. Tällä hetkellä näyttäisi aina täyttävän luolaston ennen onnistunutta huoneiden luontia. Kaatuu liian pienillä luolastoilla. Toistaiseksi ei luo käytäviä.
+  - Luo 7-12 huonetta ja yhdistää niitä käytävillä. Ei tarjoa toistaiseksi mitään vaihtoehtoja. Tällä hetkellä näyttäisi aina täyttävän luolaston ennen onnistunutta huoneiden luontia. Kaatuu liian pienillä luolastoilla.
   ![](kuvat/kayttoohje/bsp.png)  
   (BSP)
 3. drunkard's walk
