@@ -7,8 +7,8 @@ map = ['..#.',
        '###.',
        '.#..']
 #       ^ start
-start = (3, 0)
-goal = (0, 3)
+start = (0, 1)
+goal = (2, 3)
 
 # very expensive to go through wall
 weight = {'.': 1,
@@ -53,6 +53,7 @@ while len(queue) > 0:
 
         route = route[::-1]
         print(route)
+        break
 
     # look at neighbors
     neighs = [(-1, 0), (1, 0), (0, -1), (0, 1)]

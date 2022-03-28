@@ -59,7 +59,14 @@ def cls():
     os.system('clear')
 
 L = Luolasto(19, 77)
-
+K = KaytavanKaivaja(L)
+# bsp(L)
+# L.maarita_naapurit()
+# L.etsi_seinat()
+# K.kaiva_kaytavat()
+# cls()
+# L.nayta()
+# L.etsi_seinat()
 komennot = ['1: uusi luolasto',
             '2: bsp rooms (jyrää tämänhetkisen luolaston)',
             '3: drunkard\'s walk',
@@ -68,8 +75,8 @@ komennot = ['1: uusi luolasto',
 
 while True:
     cls()
-    L.maarita_naapurit()
-    L.etsi_seinat()
+    # L.maarita_naapurit()
+    # L.etsi_seinat()
     L.nayta()
     for komento in komennot:
         print(komento)
@@ -87,6 +94,9 @@ while True:
 
     if komento == '2':
         bsp(L)
+        L.maarita_naapurit()
+        L.etsi_seinat()
+        K.kaiva_kaytavat()
         continue
 
     if komento == '3':
@@ -97,6 +107,8 @@ while True:
         visualisointi = input('visualisointi k/e: ')
         cls()
         drunkard(L, tavoite, elinika, visualisointi=='k')
+        L.maarita_naapurit()
+        L.etsi_seinat()
         continue
 
     if komento == '4':
@@ -108,3 +120,5 @@ while True:
         visualisointi = input('visualisointi k/e')
         cls()
         suunnattu_luola(L, 3, mutkaisuus, vaihtelu, suunta=='v', visualisointi=='k')
+        L.maarita_naapurit()
+        L.etsi_seinat()

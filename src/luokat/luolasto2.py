@@ -122,7 +122,7 @@ class Ruutu:
         if self._tyyppi == 'seinä':
             return self.seinan_esitys()
         
-        tyyppien_esitykset = {'kallio': '#',
+        tyyppien_esitykset = {'kallio': ' ',
                               'lattia': '.',
                               'käytävä': '░'}
         
@@ -152,8 +152,10 @@ class Luolasto:
     def leveys(self, leveys):
         self._leveys = leveys
 
-    def kaiva(self, x, y):
-        self.kartta[y][x].tyyppi = 'lattia'
+    def kaiva(self, x, y, kohdetyyppi: str = 'lattia'):
+        if self.kartta[y][x].tyyppi in ['lattia', 'käytävä']:
+            return
+        self.kartta[y][x].tyyppi = kohdetyyppi
 
     def kaiva_huone(self, huone: Huone):
         for y in range(huone.y, huone.y+huone.korkeus):
