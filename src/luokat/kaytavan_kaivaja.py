@@ -22,7 +22,7 @@ class KaytavanKaivaja:
             kohdehuone = lahtohuone
             while kohdehuone == lahtohuone:
                 kohdehuone = random.choice(huoneet)
-            uudet_painot = {'lattia': 3,
+            uudet_painot = {'lattia': 10,
                             'käytävä': 1,
                             'kallio': 1.5,
                             'seinä': 6}
