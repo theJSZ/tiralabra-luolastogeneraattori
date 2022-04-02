@@ -39,6 +39,7 @@ class Ruutu:
         return True
 
     def seinan_esitys(self):
+        # return '#'
         naapurityypit = []
         for naapuri in self._naapurit:
             if not naapuri:
@@ -124,7 +125,8 @@ class Ruutu:
         
         tyyppien_esitykset = {'kallio': ' ',
                               'lattia': '.',
-                              'käytävä': '░'}
+                              'käytävä': '░',
+                              'ovi': '+'}
         
         return tyyppien_esitykset[self._tyyppi]
 
