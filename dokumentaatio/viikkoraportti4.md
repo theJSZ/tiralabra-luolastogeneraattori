@@ -1,0 +1,2 @@
+# Viikkoraportti 4
+Tällä viikolla tarkoitukseni oli käyttää aika koodin refaktorointiin mutta en tehnyt sitä juurikaan. Sen sijaan mietin toteutin erillisten yhtenäisten komponenttien etsimisen ja yhdistämisen luolastossa. Viilailin myös koko ajan käytävien reitinhakuun käytettävän A*-algoritmin parametreja, en ole vieläkään siihen aivan tyytyväinen. Aikaa meni 9 tuntia. Ensi viikolla pitäisi varmaan keskittyä testiautomaatioon ja dokumentointiin, ja refaktorointiin.

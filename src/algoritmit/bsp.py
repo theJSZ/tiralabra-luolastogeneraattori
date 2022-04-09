@@ -2,9 +2,19 @@ import random
 from time import sleep
 from luokat.huone import Huone
 from luokat.luolasto import Luolasto
-from algoritmit.kaytava import kaytava
 
 def jaa(alue: Huone, luolasto: Luolasto, alueet):
+    """Jakaa annetun alueen kahdeksi uudeksi alueeksi,
+    täyttää annettua listaa aina kun jako ei enää onnistu
+
+    Args:
+        alue (Huone): _description_
+        luolasto (Luolasto): _description_
+        alueet (list): _description_
+
+    Returns:
+        _type_: _description_
+    """
     y = alue.y
     x = alue.x
     korkeus = alue.korkeus
@@ -29,6 +39,16 @@ def jaa(alue: Huone, luolasto: Luolasto, alueet):
     alueet.append(jaa(lapsi2, luolasto, alueet))
 
 def validi_huone(huone: Huone, luolasto: Luolasto):
+    """Tarkistaa että luolastossa on tilaa halutulle huoneelle
+    (emme halua huoneita kiinni toisiinsa)
+
+    Args:
+        huone (Huone): _description_
+        luolasto (Luolasto): _description_
+
+    Returns:
+        bool: _description_
+    """
     laajennettu_huone = Huone(huone.y-1, huone.x-1, huone.korkeus+2, huone.leveys+2)
     for y in range(laajennettu_huone.y, laajennettu_huone.y+laajennettu_huone.korkeus):
         for x in range(laajennettu_huone.x, laajennettu_huone.x+laajennettu_huone.leveys):
@@ -36,12 +56,25 @@ def validi_huone(huone: Huone, luolasto: Luolasto):
                 return False
     return True
 
-def bsp(luolasto: Luolasto):
+def bsp(luolasto: Luolasto, yritys):
+    """Jakaa luolastoa pienempiin alueisiin. Yrittää luoda
+    huoneen jokaiseen lopulliseen alueeseen. Jos ei onnistu
+    sadalla yrityksellä luomaan luolastoon 7-11 huonetta,
+    palauttaa False
+
+    Args:
+        luolasto (Luolasto): _description_
+        yritys (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     h = Huone(1, 1, luolasto.korkeus-2, luolasto.leveys-2)
     alueet = []
     alustavat_huoneet = []
     n_huoneet = 0
     jaa(h, luolasto, alueet)
+    
     for alue in alueet:
         if alue:
             if alue.leveys >= 5 and alue.korkeus >= 5:
@@ -61,15 +94,11 @@ def bsp(luolasto: Luolasto):
             n_huoneet += 1
             luolasto.huoneet.append(huone)
 
-    ok = n_huoneet > 7 and n_huoneet < 12
+    ok = n_huoneet >= 7 and n_huoneet < 12
 
     if not ok:
         luolasto.tayta()
-        bsp(luolasto)
-
-# 012345
-# xxx...0
-# xxx...1
-# ......2
-# ......3
-# ......4
+        if yritys > 100:
+            return False
+        return bsp(luolasto, yritys+1)
+    return True

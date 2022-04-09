@@ -56,7 +56,6 @@ def suunnattu_luola(luolasto: Luolasto, leveys = 3, mutkaisuus = 25, vaihtelu = 
         suunta (int, optional): 1: vasemmalta oikealle, -1: oikealta vasemmalle
     """
     x = 1
-    # y = luolasto.korkeus // 2
     y = random.randint(1, luolasto.korkeus)    
 
     for x2 in range(x, luolasto.leveys-1):
@@ -71,10 +70,7 @@ def suunnattu_luola(luolasto: Luolasto, leveys = 3, mutkaisuus = 25, vaihtelu = 
 
             if visualisointi:
                 luolasto.kartta[y2][kaivettava_x].sisalto = 'o'
-            # if suunta == -1:
-            #     luolasto.kaiva(luolasto.leveys-1-x2, y2)
-            # else:
-            #     luolasto.kaiva(x2, y2)
+            
             luolasto.kaiva(kaivettava_x, y2)
         if visualisointi:
             os.system('clear')

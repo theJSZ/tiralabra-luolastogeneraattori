@@ -1,10 +1,10 @@
 # Luolastogeneraattorin käyttöohje
-Pääohjelma: src/main.py  
-Saat seuraavat vaihtoehdot:  
+Pääohjelma: src/index.py  
+Saat seuraavat vaihtoehdot:
 1. uusi luolasto
   - Kysyy halutun leveyden ja korkeuden. Leveys on rajattu terminaalin leveyden takia
 2. bsp rooms
-  - Luo 7-12 huonetta ja yhdistää niitä käytävillä. Ei tarjoa toistaiseksi mitään vaihtoehtoja. Tällä hetkellä näyttäisi aina täyttävän luolaston ennen onnistunutta huoneiden luontia. Kaatuu liian pienillä luolastoilla.
+  - Luo 7-12 huonetta ja yhdistää niitä käytävillä. Visualisointimahdollisuus käytävien kaivamisen seuraamiseen. Jos ei onnistu luomaan huoneita sadalla yrityksellä (luolasto voi olla liian pieni), ilmoittaa asiasta.
   ![](kuvat/kayttoohje/bsp.png)  
   (BSP)
 3. drunkard's walk
@@ -19,3 +19,5 @@ Saat seuraavat vaihtoehdot:
   (Algoritmi ajettu uudestaan samoilla parametreillä)
   ![](kuvat/kayttoohje/directed3.png)  
   (Vielä kolmannen kerran)
+5. yhdistä komponentit (jos luolasto koostuu useammasta erillisestä yhtenäisestä komponentista, tämä tarkistetaan jokaisen operaation jälkeen ja komponentit merkataan tässä tapauksessa tunnuskirjaimin)
+  - Kaivaa käytäviä erillisten komponenttien välille kunnes koko luolasto on saavutettavissa.

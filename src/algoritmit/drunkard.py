@@ -1,8 +1,7 @@
 import random
 import os
 from time import sleep
-from algoritmit.stilisointi import stilisoi
-from luokat.luolasto import SEINA, Luolasto
+from luokat.luolasto import Luolasto
 
 def drunkard(luolasto: Luolasto, tavoite: int, elinika: int, visualisointi: bool = False):
     LIIKKEET = [(0, -1), (0, 1), (-1, 0), (1, 0)]
@@ -18,17 +17,13 @@ def drunkard(luolasto: Luolasto, tavoite: int, elinika: int, visualisointi: bool
 
     while True:
         elinikaa_jaljella = elinika
-        # y, x = random.choice(validit_lahtopisteet)
         y = random.randint(1, luolasto.korkeus - 2)
         x = random.randint(1, luolasto.leveys - 2)
-        # y = luolasto.korkeus // 2
-        # x = luolasto.leveys // 2
 
         while elinikaa_jaljella:
             elinikaa_jaljella -= 1
             if luolasto.kartta[y][x].tyyppi in ['kallio', 'seinä']:
                 luolasto.kaiva(x, y)
-                # validit_lahtopisteet.append((y, x))
                 kaivamatta -= 1
                 if kaivamatta == 0:
                     return

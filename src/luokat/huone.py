@@ -28,6 +28,3 @@ class Huone:
 
     def __str__(self):
         return f'{self.y}, {self.x}, {self.korkeus}, {self.leveys}'
-
-
-# 13 6 
