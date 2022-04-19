@@ -73,7 +73,7 @@ def suunnattu_luola(luolasto: Luolasto, leveys = 3, mutkaisuus = 25, vaihtelu = 
             
             luolasto.kaiva(kaivettava_x, y2)
         if visualisointi:
-            os.system('clear')
+            # os.system('clear')
             luolasto.nayta()
             sleep(0.1)
             for y2 in range(y - (leveys-1)//2, y + 1 + (leveys-1)//2):

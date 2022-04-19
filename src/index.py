@@ -37,7 +37,7 @@ while True:
 
     if komento == '1':
         cls()
-        leveys = min(int(input('luolaston leveys (max 77): ')), 77)
+        leveys = min(int(input('luolaston leveys (max 77): ')), 7700)
         korkeus = int(input('luolaston korkeus (suositeltu max 19): '))
         L = Luolasto(korkeus, leveys)
         K = KaytavanKaivaja(L)
@@ -77,7 +77,7 @@ while True:
         for i in range(1, len(L.komponentit)):
             lahto = L.komponentit[i].kohderuutu
             kohde = L.komponentit[i-1].kohderuutu
-            K.kaiva_kaytava(lahto[0], lahto[1], kohde[0], kohde[1], None, visualisointi)
+            K.kaiva_kaytava(lahto[0], lahto[1], kohde[0], kohde[1], None, visualisointi=='k')
         
         etsija.etsi_komponentit()
         if not len(L.komponentit) == 1:

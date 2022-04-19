@@ -30,11 +30,11 @@ def drunkard(luolasto: Luolasto, tavoite: int, elinika: int, visualisointi: bool
             
             
             if visualisointi:
-                os.system('clear')
+                # os.system('clear')
                 luolasto.kartta[y][x].sisalto = 'o'
                 luolasto.nayta()
                 print(f'elinikää jäljellä {elinikaa_jaljella}, kaivamatta {kaivamatta}')
-                sleep(0.1)
+                sleep(0.05)
                 luolasto.kartta[y][x].sisalto = None
                 print('\n'*20)
             
