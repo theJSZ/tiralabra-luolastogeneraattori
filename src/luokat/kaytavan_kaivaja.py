@@ -111,14 +111,14 @@ class KaytavanKaivaja:
                     kohdetyyppi = 'käytävä'
                     if self.luolasto.kartta[ruutu[0]][ruutu[1]].tyyppi == 'seinä' or self.luolasto.kartta[ruutu[0]][ruutu[1]].tyyppi == 'ovi':
                         kohdetyyppi = 'ovi'
-                    self.luolasto.kartta[ruutu[0]][ruutu[1]].sisalto = 'o'
                     if visualisointi and not self.luolasto.kartta[ruutu[0]][ruutu[1]].tyyppi in ['käytävä', 'lattia']:
+                        self.luolasto.kartta[ruutu[0]][ruutu[1]].sisalto = 'o'
                         self.luolasto.nayta()
                         self.luolasto.kartta[lahto_y][lahto_x].sisalto = 'O'
                         self.luolasto.kartta[kohde_y][kohde_x].sisalto = 'X'
                         sleep(0.1)
-                    self.luolasto.kaiva(ruutu[1], ruutu[0], kohdetyyppi)
                     self.luolasto.kartta[ruutu[0]][ruutu[1]].sisalto = None
+                    self.luolasto.kaiva(ruutu[1], ruutu[0], kohdetyyppi)
                 break
 
             # naapurien tarkistus

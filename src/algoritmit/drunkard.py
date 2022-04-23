@@ -9,7 +9,7 @@ def drunkard(luolasto: Luolasto, tavoite: int, elinika: int, visualisointi: bool
         tavoite = 1
     if tavoite > 90:
         tavoite = 90
-    kaivamatta = int((tavoite / 100) * (luolasto.korkeus * luolasto.leveys))
+    kaivamatta = int((tavoite / 100) * ((luolasto.korkeus-2) * (luolasto.leveys-2)))
     
     y = random.randint(1, luolasto.korkeus - 2)
     x = random.randint(1, luolasto.leveys - 2)
@@ -36,7 +36,7 @@ def drunkard(luolasto: Luolasto, tavoite: int, elinika: int, visualisointi: bool
                 print(f'elinikää jäljellä {elinikaa_jaljella}, kaivamatta {kaivamatta}')
                 sleep(0.05)
                 luolasto.kartta[y][x].sisalto = None
-                print('\n'*20)
+                # print('\n'*20)
             
             liike = random.choice(LIIKKEET)
             y += liike[0]
