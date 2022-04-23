@@ -13,6 +13,9 @@ class KomponenttienEtsija:
         self.visited = [[False for _ in range(self.luolasto.leveys)] for _ in range(self.luolasto.korkeus)]
         komponentti_nr  = 0
 
+        # syvyyshaku alkaa aina jos saavutaan ruutuun jossa voi kulkea
+        # ja jossa ei vielä olla käyty.
+        # saavutettavissa olevat ruudut kootaan yhdeksi komponentiksi
         for y in range(1, self.luolasto.korkeus):
             for x in range(1, self.luolasto.leveys):
                 ruudut = []
@@ -24,10 +27,10 @@ class KomponenttienEtsija:
 
                 komponentti = Komponentti(ruudut)
                 self.luolasto.komponentit.append(komponentti)
-                komponentti.valitse_kohderuutu()
+                komponentti.valitse_kohderuutu()  # käytävän kaivamista varten
                 komponentti_nr += 1
 
-        if len(self.luolasto.komponentit) == 1:
+        if len(self.luolasto.komponentit) == 1:  # poistetaan komponenttien tunnukset tarpeettomina
             self.luolasto.poista_sisallot()
 
     def kartalla(self, y, x):
@@ -53,9 +56,14 @@ class KomponenttienEtsija:
             return
 
         self.visited[y][x] = True
+
+        # merkataan eri komponentit eri tunnuksin
         ruutu.sisalto = chr((komponentti_nr % 30) +65)
+
+        # lisätään ruutu listaan josta kootaan komponentti
         ruudut.append((y, x))
 
+        # jälkimmäiset mukaan jos haluamme liittää diagonaalit
         seuraavat = [(-1, 0), (1, 0), (0, -1), (0, 1)]  #, (-1, -1), (-1, 1), (1, -1), (1, 1)]
 
         for seuraava in seuraavat:

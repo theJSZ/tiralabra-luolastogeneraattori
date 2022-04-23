@@ -1,5 +1,4 @@
 import os
-import random
 from time import sleep, time
 import sys
 from algoritmit.bsp import bsp
@@ -92,7 +91,7 @@ while True:
         for i in range(1, len(L.komponentit)):
             lahto = L.komponentit[i].kohderuutu
             kohde = L.komponentit[i-1].kohderuutu
-
+            print(f'käytävä {i+1}')
             K.kaiva_kaytava(lahto[0], lahto[1], kohde[0], kohde[1], None, visualisointi=='k')
 
         loppu = time()

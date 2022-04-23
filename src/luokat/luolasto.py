@@ -120,7 +120,7 @@ class Ruutu:
         
         tyyppien_esitykset = {'kallio': ' ',
                               'lattia': '.',
-                              'käytävä': '░',
+                              'käytävä': '░',  # '▒' '▓'
                               'ovi': '+'} # oli ennen '+'
         
         return tyyppien_esitykset[self._tyyppi]

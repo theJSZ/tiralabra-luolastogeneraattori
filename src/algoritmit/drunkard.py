@@ -1,5 +1,4 @@
 import random
-import os
 from time import sleep
 from luokat.luolasto import Luolasto
 
@@ -13,7 +12,6 @@ def drunkard(luolasto: Luolasto, tavoite: int, elinika: int, visualisointi: bool
     
     y = random.randint(1, luolasto.korkeus - 2)
     x = random.randint(1, luolasto.leveys - 2)
-    validit_lahtopisteet = [(y, x)]    
 
     while True:
         elinikaa_jaljella = elinika
@@ -27,8 +25,7 @@ def drunkard(luolasto: Luolasto, tavoite: int, elinika: int, visualisointi: bool
                 kaivamatta -= 1
                 if kaivamatta == 0:
                     return
-            
-            
+
             if visualisointi:
                 # os.system('clear')
                 luolasto.kartta[y][x].sisalto = 'o'

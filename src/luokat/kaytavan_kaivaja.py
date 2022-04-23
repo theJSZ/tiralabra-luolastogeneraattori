@@ -94,31 +94,34 @@ class KaytavanKaivaja:
 
                 reitti = reitti[::-1]
 
+                # näytetään hetken ajan suunniteltu reitti
                 if visualisointi:
                     for ruutu in reitti:
                         ruutu = self.luolasto.kartta[ruutu[0]][ruutu[1]]
                         if ruutu.tyyppi in ['käytävä', 'lattia']:
-                            ruutu.sisalto = '-'
+                            ruutu.sisalto = '▒'
                             continue
-                        ruutu.sisalto = '+'
+                        ruutu.sisalto = '▓'
                     self.luolasto.kartta[lahto_y][lahto_x].sisalto = 'O'
                     self.luolasto.kartta[kohde_y][kohde_x].sisalto = 'X'
-                        
+
                     self.luolasto.nayta()
                     sleep(1)
 
                 for ruutu in reitti:
+                    ruutu = self.luolasto.kartta[ruutu[0]][ruutu[1]]
                     kohdetyyppi = 'käytävä'
-                    if self.luolasto.kartta[ruutu[0]][ruutu[1]].tyyppi == 'seinä' or self.luolasto.kartta[ruutu[0]][ruutu[1]].tyyppi == 'ovi':
+                    if ruutu.tyyppi == 'seinä' or ruutu.tyyppi == 'ovi':
                         kohdetyyppi = 'ovi'
-                    if visualisointi and not self.luolasto.kartta[ruutu[0]][ruutu[1]].tyyppi in ['käytävä', 'lattia']:
-                        self.luolasto.kartta[ruutu[0]][ruutu[1]].sisalto = 'o'
+                    if visualisointi and not ruutu.tyyppi in ['käytävä', 'lattia']:
+                        ruutu.sisalto = 'o'
                         self.luolasto.nayta()
                         self.luolasto.kartta[lahto_y][lahto_x].sisalto = 'O'
                         self.luolasto.kartta[kohde_y][kohde_x].sisalto = 'X'
                         sleep(0.1)
-                    self.luolasto.kartta[ruutu[0]][ruutu[1]].sisalto = None
-                    self.luolasto.kaiva(ruutu[1], ruutu[0], kohdetyyppi)
+
+                    ruutu.sisalto = None
+                    self.luolasto.kaiva(ruutu.sijainti[1], ruutu.sijainti[0], kohdetyyppi)
                 break
 
             # naapurien tarkistus

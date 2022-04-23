@@ -23,8 +23,8 @@ def jaa(alue: Huone, luolasto: Luolasto, alueet):
     if korkeus < 8 or leveys < 15 or korkeus*leveys < 21:
         return alue
 
-    if random.random() < 0.2:
-        return alue
+    # if random.random() < 0.2:
+    #     return alue
 
     jakosuunta = random.choice(['y', 'y', 'x'])
 
@@ -96,11 +96,9 @@ def bsp(luolasto: Luolasto, yritys, huoneiden_maara):
     for huone in alustavat_huoneet:
         if validi_huone(huone, luolasto):
             luolasto.kaiva_seinallinen_huone(huone)
-            # n_huoneet += 1
             luolasto.huoneet.append(huone)
 
-    # n_huoneet = len(luolasto.huoneet)
-    if (len(luolasto.huoneet) >= huoneiden_maara): # and n_huoneet < 12):
+    if (len(luolasto.huoneet) >= huoneiden_maara):
         ok = True
     else:
         ok = False
