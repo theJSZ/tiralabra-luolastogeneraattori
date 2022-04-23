@@ -1,5 +1,15 @@
 class Huone:
+    """Suorakaiteen muotoinen alue luolastoa
+    """
     def __init__(self, y, x, korkeus, leveys):
+        """Luokan konstruktori
+
+        Args:
+            y (int): vasen ylänurkka y
+            x (int): vasen ylänurkka x
+            korkeus (int): huoneen korkeus
+            leveys (int): huoneen leveys
+        """
         self._y = y
         self._x = x
         self._korkeus = korkeus

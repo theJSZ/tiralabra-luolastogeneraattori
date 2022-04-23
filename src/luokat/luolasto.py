@@ -1,4 +1,3 @@
-# from ruutu import Ruutu
 from luokat.huone import Huone
 class Ruutu:
     def __init__(self, y, x, tyyppi: str = None):
@@ -36,6 +35,12 @@ class Ruutu:
         return True
 
     def seinan_esitys(self):
+        """Yrittää löytää luontevimman ascii-esityksen
+        seinäruudulle naapureista riippuen
+
+        Returns:
+            str: joku näistä: ┘ ┐ └ ┌ ┴ ┬ ├ ┤ ─ │
+        """
         naapurityypit = []
         for naapuri in self._naapurit:
             if not naapuri:
@@ -73,26 +78,21 @@ class Ruutu:
         # Jos ei seinää vierekkäisissä diagonaaleissa mutta
         # kyllä kolmessa niihin liittyvässä pääsuunnassa:
         #   ┴ ┬ ├ ┤
-
-
         if not 'seinä' in [naapurityypit[0], naapurityypit[5]]:
-        # if not 'seinä' == naapurityypit[0] or not 'seinä' == naapurityypit[5]:
-            if naapurityypit[1] == 'seinä' and naapurityypit[3] == 'seinä' and naapurityypit[6] == 'seinä':
+            if [naapurityypit[1], naapurityypit[3], naapurityypit[6]] == ['seinä', 'seinä', 'seinä']:
                 return '┴'
+
         if not 'seinä' in [naapurityypit[2], naapurityypit[7]]:
-        # if not 'seinä' == naapurityypit[2] or not 'seinä' == naapurityypit[7]:
-            if naapurityypit[1] == 'seinä' and naapurityypit[4] == 'seinä' and naapurityypit[6] == 'seinä':
+            if [naapurityypit[1], naapurityypit[4], naapurityypit[6]] == ['seinä', 'seinä', 'seinä']:
                 return '┬'
+
         if not 'seinä' in [naapurityypit[5], naapurityypit[7]]:
-        # if not 'seinä' == naapurityypit[7] or not 'seinä' == naapurityypit[5]:
-            if naapurityypit[3] == 'seinä' and naapurityypit[4] == 'seinä' and naapurityypit[6] == 'seinä':
+            if [naapurityypit[3], naapurityypit[4], naapurityypit[6]] == ['seinä', 'seinä', 'seinä']:
                 return '├'
+
         if not 'seinä' in [naapurityypit[0], naapurityypit[2]]:
-        # if not 'seinä' == naapurityypit[0] or not 'seinä' == naapurityypit[2]:
-            if naapurityypit[3] == 'seinä' and naapurityypit[4] == 'seinä' and naapurityypit[1] == 'seinä':
+            if [naapurityypit[3], naapurityypit[4], naapurityypit[1]] == ['seinä', 'seinä', 'seinä']:
                 return '┤'
-
-
 
         # nyt jäljellä vain suoria pätkiä
         if [naapurityypit[1], naapurityypit[6]] == ['seinä', 'seinä']:
@@ -104,6 +104,7 @@ class Ruutu:
         if 'seinä' in [naapurityypit[3], naapurityypit[4]]:
             return '│'
 
+        # jos mikään ehto ei täyttynyt, ei kyllä pitäisi tapahtua
         return '│'
 
     def __str__(self):
@@ -120,7 +121,7 @@ class Ruutu:
         tyyppien_esitykset = {'kallio': ' ',
                               'lattia': '.',
                               'käytävä': '░',
-                              'ovi': '░'} # oli ennen '+'
+                              'ovi': '+'} # oli ennen '+'
         
         return tyyppien_esitykset[self._tyyppi]
 
@@ -227,7 +228,6 @@ class Luolasto:
         for rivi in self.kartta:
             for ruutu in rivi:
                 if ruutu.tyyppi == 'kallio':
-                    naapurityypit = []
                     for naapuri in ruutu._naapurit:
                         if naapuri and naapuri.tyyppi == 'lattia':
                             ruutu.tyyppi = 'seinä'

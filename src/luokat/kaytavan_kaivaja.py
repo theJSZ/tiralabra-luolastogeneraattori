@@ -2,8 +2,6 @@ from time import sleep
 from luokat.luolasto import Luolasto
 from heapq import heappop, heappush
 import random
-import os
-
 class KaytavanKaivaja:
     def __init__(self, luolasto: Luolasto):
         self.luolasto = luolasto
@@ -15,6 +13,7 @@ class KaytavanKaivaja:
         määrän satunnaisia pareja (ei aina löydä parempia reittejä
         kuin olemassaolevat)
         """
+        print('käytävien kaivaminen alkaa')
         huoneet = self.luolasto.huoneet
         huoneet.sort()
 
@@ -26,18 +25,21 @@ class KaytavanKaivaja:
             kohde_x = huoneet[n].keskipiste()[1]
 
             self.kaiva_kaytava(lahto_y, lahto_x, kohde_y, kohde_x, None, visualisointi)
-        
         # yhdistäminen muutaman kerran satunnaisesti
         for _ in range(random.randint(6, 9)):
             lahtohuone = random.choice(huoneet)
-            kohdehuone = lahtohuone
-            while abs(huoneet.index(lahtohuone) - huoneet.index(kohdehuone)) <= 2:
+            # kohdehuone = lahtohuone
+            kohdehuone = random.choice(huoneet)
+            while kohdehuone is lahtohuone:
                 kohdehuone = random.choice(huoneet)
-            uudet_painot = {'lattia': 15,
-                            'käytävä': 3,
-                            'kallio': 7,
-                            'seinä': 50,
-                            'ovi': 1}
+
+            # while abs(huoneet.index(lahtohuone) - huoneet.index(kohdehuone)) <= 2:
+            #     kohdehuone = random.choice(huoneet)
+            uudet_painot = {'lattia': 15, # 15
+                            'käytävä': 0, # 3
+                            'kallio': 7,  # 7
+                            'seinä': 50,  # 50
+                            'ovi': 1}     # 1
 
             lahto_y = lahtohuone.keskipiste()[0]
             lahto_x = lahtohuone.keskipiste()[1]
@@ -45,6 +47,7 @@ class KaytavanKaivaja:
             kohde_x = kohdehuone.keskipiste()[1]
 
             self.kaiva_kaytava(lahto_y, lahto_x, kohde_y, kohde_x, uudet_painot, visualisointi)
+        print('kaikki käytävät kaivettu')
 
     def kaiva_kaytava(self, lahto_y, lahto_x, kohde_y, kohde_x, painot: dict = None, visualisointi: bool = False):
         """Yhdistää annetut koordinaatit
@@ -90,6 +93,19 @@ class KaytavanKaivaja:
                     sijainti = edellinen
 
                 reitti = reitti[::-1]
+
+                if visualisointi:
+                    for ruutu in reitti:
+                        ruutu = self.luolasto.kartta[ruutu[0]][ruutu[1]]
+                        if ruutu.tyyppi in ['käytävä', 'lattia']:
+                            ruutu.sisalto = '-'
+                            continue
+                        ruutu.sisalto = '+'
+                    self.luolasto.kartta[lahto_y][lahto_x].sisalto = 'O'
+                    self.luolasto.kartta[kohde_y][kohde_x].sisalto = 'X'
+                        
+                    self.luolasto.nayta()
+                    sleep(1)
 
                 for ruutu in reitti:
                     kohdetyyppi = 'käytävä'

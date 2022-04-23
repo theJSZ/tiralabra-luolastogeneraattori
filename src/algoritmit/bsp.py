@@ -56,7 +56,7 @@ def validi_huone(huone: Huone, luolasto: Luolasto):
                 return False
     return True
 
-def bsp(luolasto: Luolasto, yritys):
+def bsp(luolasto: Luolasto, yritys, huoneiden_maara):
     """Jakaa luolastoa pienempiin alueisiin. Yrittää luoda
     huoneen jokaiseen lopulliseen alueeseen. Jos ei onnistu
     sadalla yrityksellä luomaan luolastoon 7-11 huonetta,
@@ -69,12 +69,18 @@ def bsp(luolasto: Luolasto, yritys):
     Returns:
         _type_: _description_
     """
+
+    # aloitus koko luolaston kokoisesta alueesta
     h = Huone(1, 1, luolasto.korkeus-2, luolasto.leveys-2)
-    alueet = []
-    alustavat_huoneet = []
-    n_huoneet = 0
-    jaa(h, luolasto, alueet)
+    luolasto.huoneet = []
     
+    # tähän listaan kerätään rekursiivisen jaon lopputulos
+    alueet = []
+    
+    jaa(h, luolasto, alueet)
+
+
+    alustavat_huoneet = []
     for alue in alueet:
         if alue:
             if alue.leveys >= 5 and alue.korkeus >= 5:
@@ -86,19 +92,22 @@ def bsp(luolasto: Luolasto, yritys):
                 uusi_huone = Huone(alue.y+huone_y, alue.x+huone_x, huone_korkeus, huone_leveys)
                 alustavat_huoneet.append(uusi_huone)
 
+
     for huone in alustavat_huoneet:
-        if huone.korkeus > 2*huone.leveys:
-            huone = Huone(huone.y, huone.x, huone.korkeus // 2, huone.leveys)
         if validi_huone(huone, luolasto):
             luolasto.kaiva_seinallinen_huone(huone)
-            n_huoneet += 1
+            # n_huoneet += 1
             luolasto.huoneet.append(huone)
 
-    ok = n_huoneet >= 7 and n_huoneet < 12
+    # n_huoneet = len(luolasto.huoneet)
+    if (len(luolasto.huoneet) >= huoneiden_maara): # and n_huoneet < 12):
+        ok = True
+    else:
+        ok = False
 
     if not ok:
         luolasto.tayta()
         if yritys > 100:
             return False
-        return bsp(luolasto, yritys+1)
+        return bsp(luolasto, yritys+1, huoneiden_maara)
     return True

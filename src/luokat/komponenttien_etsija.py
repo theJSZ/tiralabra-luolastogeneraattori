@@ -17,7 +17,7 @@ class KomponenttienEtsija:
             for x in range(1, self.luolasto.leveys):
                 ruudut = []
                 ruutu = self.luolasto.kartta[y][x]
-                if ruutu.tyyppi not in ['käytävä', 'lattia', 'ovi'] or self.visited[y][x]:
+                if (ruutu.tyyppi not in ['käytävä', 'lattia', 'ovi']) or (self.visited[y][x]):
                     continue
 
                 self.dfs(y, x, komponentti_nr, ruudut)
@@ -49,14 +49,14 @@ class KomponenttienEtsija:
         if not self.kartalla(y, x):
             return
         ruutu = self.luolasto.kartta[y][x]
-        if ruutu.tyyppi not in ['käytävä', 'lattia', 'ovi'] or self.visited[y][x]:
+        if (ruutu.tyyppi not in ['käytävä', 'lattia', 'ovi']) or (self.visited[y][x]):
             return
 
         self.visited[y][x] = True
-        ruutu.sisalto = chr(komponentti_nr+65)
+        ruutu.sisalto = chr((komponentti_nr % 30) +65)
         ruudut.append((y, x))
 
-        seuraavat = [(-1, 0), (1, 0), (0, -1), (0, 1), (-1, -1), (-1, 1), (1, -1), (1, 1)]
+        seuraavat = [(-1, 0), (1, 0), (0, -1), (0, 1)]  #, (-1, -1), (-1, 1), (1, -1), (1, 1)]
 
         for seuraava in seuraavat:
             seuraava_y = y+seuraava[0]
