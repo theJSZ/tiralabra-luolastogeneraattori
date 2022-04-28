@@ -24,6 +24,7 @@ class TestKomponentit(unittest.TestCase):
     def test_komponenttien_laskija(self):
         edellinen = None
         todelliset_komponentit = 0
+        
         for rivi in range(1, 18):
             # kaivetaan joka riviltä satunnainen ruutu
             kaivetaan_x = random.choice(range(1, 76))

@@ -44,8 +44,8 @@ while True:
 
     if komento == '1':  # uusi luolasto
         cls()
-        leveys = min(int(input('luolaston leveys (max 77): ')), 7700)
-        korkeus = int(input('luolaston korkeus (suositeltu max 19): '))
+        leveys = min(int(input('luolaston leveys: ')), 7700)
+        korkeus = int(input('luolaston korkeus: '))
         L = Luolasto(korkeus, leveys)
         K = KaytavanKaivaja(L)
         etsija = KomponenttienEtsija(L)

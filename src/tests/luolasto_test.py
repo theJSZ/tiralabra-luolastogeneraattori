@@ -48,22 +48,13 @@ class TestLuolasto(unittest.TestCase):
 
         self.L.kaiva_seinallinen_huone(H)
 
-        # otetaan muistiin paikat joissa pitäisi nyt olla seinää ja lattiaa
-        seinaruudut = []
-        lattiaruudut = []
-        
+        # pitäisi nyt olla seinää ja lattiaa
         for y in range(huone_y, huone_y+huone_korkeus):
             for x in range(huone_x, huone_x+huone_leveys):
                 if y in [huone_y, huone_y+huone_korkeus-1] or x in [huone_x, huone_x+huone_leveys-1]:
-                    seinaruudut.append((y, x))
+                    self.assertEqual(self.L.kartta[y][x].tyyppi, 'seinä')
                 else:
-                    lattiaruudut.append((y, x))
-
-        for ruutu in seinaruudut:
-            self.assertEqual(self.L.kartta[ruutu[0]][ruutu[1]].tyyppi, 'seinä')
-        for ruutu in lattiaruudut:
-            self.assertEqual(self.L.kartta[ruutu[0]][ruutu[1]].tyyppi, 'lattia')
-
+                    self.assertEqual(self.L.kartta[y][x].tyyppi, 'lattia')
 
     def test_etsi_seinat(self):
         # valitaan kaivettava ruutu sallituista paikoista eli ei kiinni reunassa
