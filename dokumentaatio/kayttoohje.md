@@ -29,3 +29,11 @@ Aiemmin luolaston koko oli rajoitettu, rajoitus on nyt poistettu. Kattona toimii
 
 ![](kuvat/iso_bsp.png)
 (600*100 luolasto, ajettu bsp luomaan vähintään 150 huonetta)
+
+# Testaus
+
+Testejä  on vasta vähän mutta ne voi ajaa poetry shellin kautta:  
+
+    poetry install
+    poetry shell
+    pytest src
