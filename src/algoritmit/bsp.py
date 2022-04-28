@@ -52,7 +52,11 @@ def validi_huone(huone: Huone, luolasto: Luolasto):
     laajennettu_huone = Huone(huone.y-1, huone.x-1, huone.korkeus+2, huone.leveys+2)
     for y in range(laajennettu_huone.y, laajennettu_huone.y+laajennettu_huone.korkeus):
         for x in range(laajennettu_huone.x, laajennettu_huone.x+laajennettu_huone.leveys):
+            if not y in range(0, luolasto.korkeus) or not x in range(0, luolasto.leveys):
+                # huone kiinni reunassa
+                return False
             if not luolasto.kartta[y][x].tyyppi == 'kallio':
+                # huone kiinni toisessa huoneessa
                 return False
     return True
 
