@@ -39,7 +39,7 @@ while True:
         print(komennot[-1])
 
     komento = input()
-    if komento not in ['1', '2', '3', '4', '5']:
+    if komento not in ['1', '2', '3', '4', '5', '6']:
         continue
 
     if komento == '1':  # uusi luolasto
@@ -103,3 +103,80 @@ while True:
         if len(L.komponentit) != 1:
             print('jotain meni vikaan')
             sleep(3)
+
+    if komento == '6':  # suorituskykytestit
+        L = Luolasto(19,77)
+        K = KaytavanKaivaja(L)
+        etsija = KomponenttienEtsija(L)
+
+        # print('luodaan 100 luolastoa (77*19), bsp ilman käytäviä')
+
+        # alku = time()
+
+        # for i in range(100):
+        #     L.tayta()
+        #     bsp(L, 0, 7)
+        #     # K.kaiva_kaytavat(False)
+
+        # loppu = time()
+
+        # print(f'bsp: {loppu-alku} s.')
+
+        for koko in [(50,50), (100,50), (100,100), (200,100), (200,200)]:
+            print(f'luodaan 50 luolastoa ({koko[0]}*{koko[1]}), bsp + käytävät')
+
+            L = Luolasto(koko[0], koko[1])
+            K = KaytavanKaivaja(L)
+
+            alku = time()
+
+            for _ in range(50):
+               
+                # etsija = KomponenttienEtsija(L)
+
+                L.tayta()
+                bsp(L, 0, 7)
+                K.kaiva_kaytavat(False)
+
+            loppu = time()
+
+            print(f'aika: {loppu-alku} s.')
+
+        # print('luodaan 100 luolastoa (77*19), drunkard, ei käytäviä')
+
+        # alku = time()
+
+        # for i in range(100):
+        #     L.tayta()
+        #     drunkard(L, 30, 10, False)
+        #     # etsija.etsi_komponentit()
+        #     # for i in range(1, len(L.komponentit)):
+        #     #     lahto = L.komponentit[i].kohderuutu
+        #     #     kohde = L.komponentit[i-1].kohderuutu
+        #         # print(f'käytävä {i+1}')
+        #         # K.kaiva_kaytava(lahto[0], lahto[1], kohde[0], kohde[1], None, False)
+
+
+        # loppu = time()
+
+        # print(f'drunkard: {loppu-alku} s.')
+        
+        # print('luodaan 100 luolastoa (77*19), drunkard + käytävät')
+
+        # alku = time()
+
+        # for i in range(100):
+        #     L.tayta()
+        #     drunkard(L, 5, 10, False)
+        #     etsija.etsi_komponentit()
+        #     for i in range(1, len(L.komponentit)):
+        #         lahto = L.komponentit[i].kohderuutu
+        #         kohde = L.komponentit[i-1].kohderuutu
+        #         # print(f'käytävä {i+1}')
+        #         K.kaiva_kaytava(lahto[0], lahto[1], kohde[0], kohde[1], None, False)
+
+
+        # loppu = time()
+
+        # print(f'drunkard + käytävät: {loppu-alku} s.')
+        sleep(20)

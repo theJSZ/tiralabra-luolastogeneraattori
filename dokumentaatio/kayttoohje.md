@@ -37,3 +37,7 @@ Testejä  on vasta vähän mutta ne voi ajaa poetry shellin kautta:
     poetry install
     poetry shell
     pytest src
+
+Ohjelmassa on nyt hyvin alkeellinen suorituskykytesti. Sen voi käynnistää valitsemalla
+päävalikossa vaihtoehdon 6. Tästä nähdään että luolaston koon kaksinkertaistuessa tarvittava aika hieman yli kaksinkertaistuu. En ole vielä tutkinut tarkemmin aikavaatimuksia mutta tiedän että suurin osa ajasta menee käytävien luomiseen.
+![](kuvat/suorituskyky_demo.jpg)
