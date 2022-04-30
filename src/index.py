@@ -13,7 +13,18 @@ sys.setrecursionlimit(100000)
 def cls():
     """Tyhjentää terminaalin
     """
-    os.system('clear')
+    command = 'clear'
+    if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
+        command = 'cls'
+    os.system(command)
+
+def kysy_luku(viesti: str):
+    while True:
+        try:
+            vastaus = int(input(viesti))
+            return vastaus
+        except:
+            continue
 
 # Nethack-standardi: 77*19
 L = Luolasto(19, 77)
@@ -23,7 +34,9 @@ komennot = ['1: uusi luolasto',
             '2: bsp rooms (jyrää tämänhetkisen luolaston)',
             '3: drunkard\'s walk',
             '4: basic directional dungeon',
-            '5: yhdistä komponentit']
+            '5: yhdistä komponentit',
+            't: suorituskykytesti (kestää muutaman minuutin, ei kerro kauheasti)',
+            'q: lopeta']
 
 while True:
     cls()
@@ -31,28 +44,37 @@ while True:
     L.nayta()
     if len(L.komponentit) > 1:
         print(f'{len(L.komponentit)} yhtenäistä komponenttia')
-    for komento in komennot[:-1]:
+    for komento in komennot[:-3]:
         print(komento)
 
     # komponenttien yhdistäminen järkevää vain jos niitä on useampia
     if len(L.komponentit) > 1:
-        print(komennot[-1])
+        print(komennot[4])
+
+    print(komennot[-2])
+    print(komennot[-1])
+
 
     komento = input()
-    if komento not in ['1', '2', '3', '4', '5', '6']:
+    if komento not in ['1', '2', '3', '4', '5', 't', 'q']:
         continue
+
+    if komento == 'q':
+        exit()
 
     if komento == '1':  # uusi luolasto
         cls()
-        leveys = min(int(input('luolaston leveys: ')), 7700)
-        korkeus = int(input('luolaston korkeus: '))
+
+        leveys = kysy_luku('luolaston leveys: ')
+        korkeus = kysy_luku('luolaston korkeus: ')
+
         L = Luolasto(korkeus, leveys)
         K = KaytavanKaivaja(L)
         etsija = KomponenttienEtsija(L)
 
     if komento == '2':  # bsp
-        huoneiden_maara = int(input('huoneita vähintään: '))
-        
+        huoneiden_maara = kysy_luku('huoneita vähintään: ')
+
         alku = time()
         if bsp(L, 0, huoneiden_maara):
             loppu = time()
@@ -66,8 +88,10 @@ while True:
     if komento == '3':  # drunkard
         cls()
         L.nayta()
-        tavoite = int(input('kaivamistavoite, % luolastosta (esim. 30): '))
-        elinika = int(input('kaivajan elinikä (esim. 50): '))
+
+        tavoite = kysy_luku('kaivamistavoite, % luolastosta (esim. 30): ')
+        elinika = kysy_luku('kaivajan elinikä (esim. 50): ')
+
         visualisointi = input('visualisointi k/e: ')
         cls()
         drunkard(L, tavoite, elinika, visualisointi=='k')
@@ -75,36 +99,36 @@ while True:
     if komento == '4':  # directional dungeon
         cls()
         L.nayta()
-        mutkaisuus = int(input('käytävän mutkaisuus (0-100): '))
-        vaihtelu = int(input('leveyden vaihtelu (0-100): '))
+        mutkaisuus = kysy_luku('käytävän mutkaisuus (0-100): ')
+        vaihtelu = kysy_luku('leveyden vaihtelu (0-100): ')
         suunta = input('aloitusreuna o/v: ')
         visualisointi = input('visualisointi k/e: ')
         cls()
         suunnattu_luola(L, 3, mutkaisuus, vaihtelu, suunta=='v', visualisointi=='k')
 
     if komento == '5':  # yhdistä komponentit
-        visualisointi = input('visualisointi k/e: ')
-        cls()
+        if len(L.komponentit) >= 1:
+            visualisointi = input('visualisointi k/e: ')
+            cls()
 
-        alku = time()
+            alku = time()
 
-        for i in range(1, len(L.komponentit)):
-            lahto = L.komponentit[i].kohderuutu
-            kohde = L.komponentit[i-1].kohderuutu
-            print(f'käytävä {i+1}')
-            K.kaiva_kaytava(lahto[0], lahto[1], kohde[0], kohde[1], None, visualisointi=='k')
+            for i in range(1, len(L.komponentit)):
+                lahto = L.komponentit[i].kohderuutu
+                kohde = L.komponentit[i-1].kohderuutu
+                K.kaiva_kaytava(lahto[0], lahto[1], kohde[0], kohde[1], None, visualisointi=='k')
 
-        loppu = time()
-        if not visualisointi == 'k':
-            print(f'valmis, aikaa meni {loppu-alku:.03f} sekuntia')
-            sleep(2)
+            loppu = time()
+            if not visualisointi == 'k':
+                print(f'valmis, aikaa meni {loppu-alku:.03f} sekuntia')
+                sleep(2)
 
-        etsija.etsi_komponentit()
-        if len(L.komponentit) != 1:
-            print('jotain meni vikaan')
-            sleep(3)
+            etsija.etsi_komponentit()
+            if len(L.komponentit) != 1:
+                print('jotain meni vikaan')
+                sleep(3)
 
-    if komento == '6':  # suorituskykytestit
+    if komento == 't':  # suorituskykytestit
         L = Luolasto(19,77)
         K = KaytavanKaivaja(L)
         etsija = KomponenttienEtsija(L)
@@ -131,9 +155,6 @@ while True:
             alku = time()
 
             for _ in range(50):
-               
-                # etsija = KomponenttienEtsija(L)
-
                 L.tayta()
                 bsp(L, 0, 7)
                 K.kaiva_kaytavat(False)

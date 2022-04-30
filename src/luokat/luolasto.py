@@ -121,7 +121,7 @@ class Ruutu:
         tyyppien_esitykset = {'kallio': ' ',
                               'lattia': '.',
                               'käytävä': '░',  # '▒' '▓'
-                              'ovi': '+'} # oli ennen '+'
+                              'ovi': '.'} # oli ennen '+'
         
         return tyyppien_esitykset[self._tyyppi]
 
@@ -131,6 +131,7 @@ class Luolasto:
         self._korkeus = korkeus
         self._leveys = leveys
         self.kartta = [[Ruutu(y, x, 'kallio') for x in range(leveys)] for y in range(korkeus)]
+        self.kaivamatta = (leveys-2) * (korkeus-2)
         self.huoneet = []
         self.komponentit = []
 
@@ -158,9 +159,10 @@ class Luolasto:
             y (int): y-koordinaatti
             kohdetyyppi (str, optional): _description_. Defaults to 'lattia'.
         """
-        if self.kartta[y][x].tyyppi in ['lattia', 'käytävä']:
+        if self.kartta[y][x].tyyppi in ['lattia', 'käytävä', 'ovi']:
             return
         self.kartta[y][x].tyyppi = kohdetyyppi
+        self.kaivamatta -= 1
 
     def kaiva_huone(self, huone: Huone):
         """Kaivaa suorakulmion
@@ -193,6 +195,7 @@ class Luolasto:
         for rivi in self.kartta:
             for ruutu in rivi:
                 ruutu.tyyppi = 'kallio'
+        self.kaivamatta = (self.leveys-2) * (self.korkeus-2)
 
     def nayta(self):
         """Tulostaa luolaston

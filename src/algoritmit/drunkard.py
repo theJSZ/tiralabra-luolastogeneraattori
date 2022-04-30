@@ -1,14 +1,23 @@
 import random
+import os
 from time import sleep
 from luokat.luolasto import Luolasto
+
+def cls():
+    """Tyhjentää terminaalin
+    """
+    command = 'clear'
+    if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
+        command = 'cls'
+    os.system(command)
 
 def drunkard(luolasto: Luolasto, tavoite: int, elinika: int, visualisointi: bool = False):
     LIIKKEET = [(0, -1), (0, 1), (-1, 0), (1, 0)]
     if tavoite < 1:
         tavoite = 1
-    if tavoite > 90:
-        tavoite = 90
-    kaivamatta = int((tavoite / 100) * ((luolasto.korkeus-2) * (luolasto.leveys-2)))
+    # if tavoite > 90:
+    #     tavoite = 90
+    kaivamatta = int((tavoite / 100) * luolasto.kaivamatta)
     
     y = random.randint(1, luolasto.korkeus - 2)
     x = random.randint(1, luolasto.leveys - 2)
@@ -29,6 +38,7 @@ def drunkard(luolasto: Luolasto, tavoite: int, elinika: int, visualisointi: bool
             if visualisointi:
                 # os.system('clear')
                 luolasto.kartta[y][x].sisalto = 'o'
+                cls()
                 luolasto.nayta()
                 print(f'elinikää jäljellä {elinikaa_jaljella}, kaivamatta {kaivamatta}')
                 sleep(0.05)

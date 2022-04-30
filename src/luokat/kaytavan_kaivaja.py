@@ -1,3 +1,4 @@
+import os
 from time import sleep
 from luokat.luolasto import Luolasto
 from heapq import heappop, heappush
@@ -109,6 +110,7 @@ class KaytavanKaivaja:
                     self.luolasto.kartta[lahto_y][lahto_x].sisalto = 'O'
                     self.luolasto.kartta[kohde_y][kohde_x].sisalto = 'X'
 
+                    os.system('clear')
                     self.luolasto.nayta()
                     sleep(1)
 
@@ -125,10 +127,11 @@ class KaytavanKaivaja:
                     # jo kaivettujen ruutujen yli
                     if visualisointi and not ruutu.tyyppi in ['käytävä', 'lattia']:
                         ruutu.sisalto = 'o'  # 'kaivaja' on ruudussa
+                        os.system('clear')
                         self.luolasto.nayta()
                         self.luolasto.kartta[lahto_y][lahto_x].sisalto = 'O'
                         self.luolasto.kartta[kohde_y][kohde_x].sisalto = 'X'
-                        sleep(0.1)
+                        sleep(0.10)
 
                     ruutu.sisalto = None  # 'kaivaja' on poistunut ruudusta
                     self.luolasto.kaiva(ruutu.sijainti[1], ruutu.sijainti[0], kohdetyyppi)

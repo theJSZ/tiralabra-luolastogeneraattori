@@ -3,6 +3,14 @@ from time import sleep
 import os
 from luokat.luolasto import Luolasto
 
+def cls():
+    """Tyhjentää terminaalin
+    """
+    command = 'clear'
+    if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
+        command = 'cls'
+    os.system(command)
+
 def korjattu_leveys(leveys, luolasto):
     if leveys < 3:
        return 3
@@ -73,8 +81,9 @@ def suunnattu_luola(luolasto: Luolasto, leveys = 3, mutkaisuus = 25, vaihtelu = 
             
             luolasto.kaiva(kaivettava_x, y2)
         if visualisointi:
+            cls()
             luolasto.nayta()
-            sleep(0.1)
+            sleep(0.05)
             for y2 in range(y - (leveys-1)//2, y + 1 + (leveys-1)//2):
                 luolasto.kartta[y2][kaivettava_x].sisalto = None
 

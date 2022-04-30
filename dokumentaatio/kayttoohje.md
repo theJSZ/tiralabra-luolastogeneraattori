@@ -1,6 +1,6 @@
 # Luolastogeneraattorin käyttöohje
 Pääohjelma: src/index.py  
-Saat seuraavat vaihtoehdot:
+Saat seuraavat vaihtoehdot: (kuvitus viitteellinen)
 1. uusi luolasto
   - Kysyy halutun leveyden ja korkeuden.
 2. bsp rooms
@@ -29,6 +29,9 @@ Aiemmin luolaston koko oli rajoitettu, rajoitus on nyt poistettu. Kattona toimii
 
 ![](kuvat/iso_bsp.png)
 (600*100 luolasto, ajettu bsp luomaan vähintään 150 huonetta)
+
+![](kuvat/iso_drunkard.png)
+(Drunkard's walk + komponenttien yhdistys 400*100 luolastossa, tavoite 30, ikä 200)
 
 # Testaus
 
