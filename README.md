@@ -1,5 +1,6 @@
 [Määrittelydokumentti](dokumentaatio/maarittely.md)  
-[Käyttöohje](dokumentaatio/kayttoohje.md)
+[Käyttöohje](dokumentaatio/kayttoohje.md)  
+[Testausdokumentti](dokumentaatio/testaus.md)  
 
 ## Viikkoraportit
 [Viikko 1](dokumentaatio/viikkoraportti1.md)  
