@@ -7,49 +7,54 @@ def cls():
     """Tyhjentää terminaalin
     """
     command = 'clear'
-    if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
+    if os.name in ('nt', 'dos'):
         command = 'cls'
     os.system(command)
 
 def drunkard(luolasto: Luolasto, tavoite: int, elinika: int, visualisointi: bool = False):
-    LIIKKEET = [(0, -1), (0, 1), (-1, 0), (1, 0)]
-    if tavoite < 1:
-        tavoite = 1
-    # if tavoite > 90:
-    #     tavoite = 90
+    """Kaivaa satunnaisesta kohdasta aloittaen ja satunnaisesti edeten
+    kunnes joko
+    a: elinikä loppuu, jolloin jatkaa uudesta satunnaisesta kohdasta alkuperäisellä eliniällä
+    b: tavoitteeksi annettu osuus jäljellä olevasta luolastosta on kaivettu, jolloin lopettaa
+
+    Args:
+        luolasto (Luolasto): Luolasto
+        tavoite (int): %-osuus kaivamatta olevista ruuduista jotka halutaan kaivaa
+        elinika (int): kuinka monta siirtoa yksi kaivaja elää
+        visualisointi (bool, optional)
+    """
+    liikkeet = [(0, -1), (0, 1), (-1, 0), (1, 0)]
+    tavoite = max(tavoite, 1)
+
     kaivamatta = int((tavoite / 100) * luolasto.kaivamatta)
-    
-    y = random.randint(1, luolasto.korkeus - 2)
-    x = random.randint(1, luolasto.leveys - 2)
 
     while True:
         elinikaa_jaljella = elinika
-        y = random.randint(1, luolasto.korkeus - 2)
-        x = random.randint(1, luolasto.leveys - 2)
+        kaivettava_y = random.randint(1, luolasto.korkeus - 2)
+        kaivettava_x = random.randint(1, luolasto.leveys - 2)
 
         while elinikaa_jaljella:
+            if kaivamatta == 0:
+                return
+
             elinikaa_jaljella -= 1
-            if luolasto.kartta[y][x].tyyppi in ['kallio', 'seinä']:
-                luolasto.kaiva(x, y)
+
+            if luolasto.kartta[kaivettava_y][kaivettava_x].tyyppi in ['kallio', 'seinä']:
+                luolasto.kaiva(kaivettava_x, kaivettava_y)
                 kaivamatta -= 1
-                if kaivamatta == 0:
-                    return
 
             if visualisointi:
-                # os.system('clear')
-                luolasto.kartta[y][x].sisalto = 'o'
-                cls()
+                luolasto.kartta[kaivettava_y][kaivettava_x].sisalto = 'o'
                 luolasto.nayta()
                 print(f'elinikää jäljellä {elinikaa_jaljella}, kaivamatta {kaivamatta}')
                 sleep(0.05)
-                luolasto.kartta[y][x].sisalto = None
-                # print('\n'*20)
-            
-            liike = random.choice(LIIKKEET)
-            y += liike[0]
-            x += liike[1]
+                luolasto.kartta[kaivettava_y][kaivettava_x].sisalto = None
 
-            y = min(y, luolasto.korkeus-2)
-            y = max(y, 1)
-            x = min(x, luolasto.leveys-2)
-            x = max(x, 1)
+            liike = random.choice(liikkeet)
+            kaivettava_y += liike[0]
+            kaivettava_x += liike[1]
+
+            kaivettava_y = min(kaivettava_y, luolasto.korkeus-2)
+            kaivettava_y = max(kaivettava_y, 1)
+            kaivettava_x = min(kaivettava_x, luolasto.leveys-2)
+            kaivettava_x = max(kaivettava_x, 1)

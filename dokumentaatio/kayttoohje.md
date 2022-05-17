@@ -33,14 +33,15 @@ Aiemmin luolaston koko oli rajoitettu, rajoitus on nyt poistettu. Kattona toimii
 ![](kuvat/iso_drunkard.png)
 (Drunkard's walk + komponenttien yhdistys 400*100 luolastossa, tavoite 30, ikä 200)
 
+# Huomio visualisoinneista
+Selkeimmän animoidun esityksen saa kun säätää terminaalin korkeuden olemaan suunnilleen luolaston kokoinen. Näin välttyy näkemästä monia kuvia päällekkäin.
+
 # Testaus
 
-Testejä  on vasta vähän mutta ne voi ajaa poetry shellin kautta:  
+Yksikkötestit voi ajaa poetry shellin kautta:  
 
     poetry install
     poetry shell
     pytest src
 
-Ohjelmassa on nyt hyvin alkeellinen suorituskykytesti. Sen voi käynnistää valitsemalla
-päävalikossa vaihtoehdon 6. Tästä nähdään että luolaston koon kaksinkertaistuessa tarvittava aika hieman yli kaksinkertaistuu. En ole vielä tutkinut tarkemmin aikavaatimuksia mutta tiedän että suurin osa ajasta menee käytävien luomiseen.
-![](kuvat/suorituskyky_demo.jpg)
+Ohjelman sisällä voi käynnistää suorituskykytestin. Se vie runsaasti aikaa eikä kerro mitään järin kiinnostavaa.

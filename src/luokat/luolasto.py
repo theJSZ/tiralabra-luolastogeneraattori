@@ -1,6 +1,10 @@
+"""Luokat Luolastolle ja yksittäiselle Ruudulle luolastossa"""
 from luokat.huone import Huone
 class Ruutu:
-    def __init__(self, y, x, tyyppi: str = None):
+    """Luokka yksittäiselle ruudulle. Sisältää tietoa ruudun naapureista,
+    sijainnista, sisällöstä ja tyypistä
+    """
+    def __init__(self, ruutu_y, ruutu_x, tyyppi: str = None):
         self._tyyppi = tyyppi
         self._sisalto = None
         self._naapurit = [None for _ in range(8)]
@@ -9,7 +13,7 @@ class Ruutu:
         # 035
         # 1.6
         # 247
-        self.sijainti = (y, x)
+        self.sijainti = (ruutu_y, ruutu_x)
 
     @property
     def naapurit(self):
@@ -31,8 +35,6 @@ class Ruutu:
     def sisalto(self, sisalto):
         self._sisalto = sisalto
 
-    def __lt__(self, toinen):
-        return True
 
     def seinan_esitys(self):
         """Yrittää löytää luontevimman ascii-esityksen
@@ -62,36 +64,36 @@ class Ruutu:
 
         # Jos ei seinää kahdessa vierekkäisessä pääsuunnassa mutta kyllä kahdessa muussa:
         #   ┘ ┐ └ ┌
-        if not 'seinä' in [naapurityypit[6], naapurityypit[4]]:
+        if 'seinä' not in [naapurityypit[6], naapurityypit[4]]:
             if [naapurityypit[1], naapurityypit[3]] == ['seinä', 'seinä']:
                 return '┘'
-        if not 'seinä' in [naapurityypit[6], naapurityypit[3]]:
+        if 'seinä' not in [naapurityypit[6], naapurityypit[3]]:
             if [naapurityypit[1], naapurityypit[4]] == ['seinä', 'seinä']:
                 return '┐'
-        if not 'seinä' in [naapurityypit[1], naapurityypit[4]]:
+        if 'seinä' not in [naapurityypit[1], naapurityypit[4]]:
             if [naapurityypit[6], naapurityypit[3]] == ['seinä', 'seinä']:
                 return '└'
-        if not 'seinä' in [naapurityypit[1], naapurityypit[3]]:
+        if 'seinä' not in [naapurityypit[1], naapurityypit[3]]:
             if [naapurityypit[6], naapurityypit[4]] == ['seinä', 'seinä']:
                 return '┌'
 
         # Jos ei seinää vierekkäisissä diagonaaleissa mutta
         # kyllä kolmessa niihin liittyvässä pääsuunnassa:
         #   ┴ ┬ ├ ┤
-        if not 'seinä' in [naapurityypit[0], naapurityypit[5]]:
-            if [naapurityypit[1], naapurityypit[3], naapurityypit[6]] == ['seinä', 'seinä', 'seinä']:
+        if 'seinä' not in [naapurityypit[0], naapurityypit[5]]:
+            if [naapurityypit[1], naapurityypit[3], naapurityypit[6]]==['seinä', 'seinä', 'seinä']:
                 return '┴'
 
-        if not 'seinä' in [naapurityypit[2], naapurityypit[7]]:
-            if [naapurityypit[1], naapurityypit[4], naapurityypit[6]] == ['seinä', 'seinä', 'seinä']:
+        if 'seinä' not in [naapurityypit[2], naapurityypit[7]]:
+            if [naapurityypit[1], naapurityypit[4], naapurityypit[6]]==['seinä', 'seinä', 'seinä']:
                 return '┬'
 
-        if not 'seinä' in [naapurityypit[5], naapurityypit[7]]:
-            if [naapurityypit[3], naapurityypit[4], naapurityypit[6]] == ['seinä', 'seinä', 'seinä']:
+        if 'seinä' not in [naapurityypit[5], naapurityypit[7]]:
+            if [naapurityypit[3], naapurityypit[4], naapurityypit[6]]==['seinä', 'seinä', 'seinä']:
                 return '├'
 
-        if not 'seinä' in [naapurityypit[0], naapurityypit[2]]:
-            if [naapurityypit[3], naapurityypit[4], naapurityypit[1]] == ['seinä', 'seinä', 'seinä']:
+        if 'seinä' not in [naapurityypit[0], naapurityypit[2]]:
+            if [naapurityypit[3], naapurityypit[4], naapurityypit[1]]==['seinä', 'seinä', 'seinä']:
                 return '┤'
 
         # nyt jäljellä vain suoria pätkiä
@@ -104,8 +106,9 @@ class Ruutu:
         if 'seinä' in [naapurityypit[3], naapurityypit[4]]:
             return '│'
 
-        # jos mikään ehto ei täyttynyt, ei kyllä pitäisi tapahtua
+        # jos mikään ehto ei täyttynyt
         return '│'
+
 
     def __str__(self):
         # jos ruudussa on 'jotain', esim visualisaatioissa voi olla 'o'
@@ -117,16 +120,19 @@ class Ruutu:
 
         if self._tyyppi == 'seinä':
             return self.seinan_esitys()
-        
+
         tyyppien_esitykset = {'kallio': ' ',
                               'lattia': '.',
                               'käytävä': '░',  # '▒' '▓'
                               'ovi': '.'} # oli ennen '+'
-        
+
         return tyyppien_esitykset[self._tyyppi]
 
 
 class Luolasto:
+    """Luokka luolastolle. Sisältää tietoa luolaston koosta, kartasta,
+    huoneista ja komponenteista
+    """
     def __init__(self, korkeus, leveys):
         self._korkeus = korkeus
         self._leveys = leveys
@@ -151,7 +157,7 @@ class Luolasto:
     def leveys(self, leveys):
         self._leveys = leveys
 
-    def kaiva(self, x, y, kohdetyyppi: str = 'lattia'):
+    def kaiva(self, ruutu_x, ruutu_y, kohdetyyppi: str = 'lattia'):
         """Muuttaa ruututyypin 'kallio' tai 'seinä' annetuksi tyypiksi
 
         Args:
@@ -159,9 +165,10 @@ class Luolasto:
             y (int): y-koordinaatti
             kohdetyyppi (str, optional): _description_. Defaults to 'lattia'.
         """
-        if self.kartta[y][x].tyyppi in ['lattia', 'käytävä', 'ovi']:
+        if self.kartta[ruutu_y][ruutu_x].tyyppi in ['lattia', 'käytävä', 'ovi']:
             return
-        self.kartta[y][x].tyyppi = kohdetyyppi
+
+        self.kartta[ruutu_y][ruutu_x].tyyppi = kohdetyyppi
         self.kaivamatta -= 1
 
     def kaiva_huone(self, huone: Huone):
@@ -170,9 +177,9 @@ class Luolasto:
         Args:
             huone (Huone): _description_
         """
-        for y in range(huone.y, huone.y+huone.korkeus):
-            for x in range(huone.x, huone.x+huone.leveys):
-                self.kaiva(x, y)
+        for ruutu_y in range(huone.y, huone.y+huone.korkeus):
+            for ruutu_x in range(huone.x, huone.x+huone.leveys):
+                self.kaiva(ruutu_x, ruutu_y)
 
     def kaiva_seinallinen_huone(self, huone: Huone):
         """Kaivaa suorakulmion, tekee reunoista tyyppiä 'seinä'
@@ -180,21 +187,24 @@ class Luolasto:
         Args:
             huone (Huone): _description_
         """
-        for y in range(huone.y, huone.y+huone.korkeus):
-            for x in range(huone.x, huone.x+huone.leveys):
-                self.kartta[y][x].tyyppi = 'seinä'
+        for ruutu_y in range(huone.y, huone.y+huone.korkeus):
+            for ruutu_x in range(huone.x, huone.x+huone.leveys):
+                self.kartta[ruutu_y][ruutu_x].tyyppi = 'seinä'
 
-        for y in range(huone.y+1, huone.y+huone.korkeus-1):
-            for x in range(huone.x+1, huone.x+huone.leveys-1):
-                self.kaiva(x, y)
-        
+        for ruutu_y in range(huone.y+1, huone.y+huone.korkeus-1):
+            for ruutu_x in range(huone.x+1, huone.x+huone.leveys-1):
+                self.kaiva(ruutu_x, ruutu_y)
+
     def tayta(self):
         """Täyttää luolaston kalliolla
         """
         self.huoneet = []
+        self.komponentit = []
+
         for rivi in self.kartta:
             for ruutu in rivi:
                 ruutu.tyyppi = 'kallio'
+
         self.kaivamatta = (self.leveys-2) * (self.korkeus-2)
 
     def nayta(self):
@@ -202,25 +212,31 @@ class Luolasto:
         """
         self.maarita_naapurit()
         self.etsi_seinat()
+
         for rivi in self.kartta:
             for ruutu in rivi:
                 print(ruutu, end="")
             print()
 
     def maarita_naapurit(self):
-        """Tarvitaan seinien oikein piirtymiseksi
+        """Tutkii jokaisen ruudun naapurit,
+        tarvitaan seinien oikein piirtymiseksi
         """
         naapurilokaatiot = [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]
-        for y, rivi in enumerate(self.kartta):
-            for x, ruutu in enumerate(rivi):
+
+        for ruutu_y, rivi in enumerate(self.kartta):
+            for ruutu_x, ruutu in enumerate(rivi):
                 for naapuri, lokaatio in enumerate(naapurilokaatiot):
-                    naapuri_y = y+lokaatio[0]
-                    naapuri_x = x+lokaatio[1]
+
+                    naapuri_y = ruutu_y+lokaatio[0]
+                    naapuri_x = ruutu_x+lokaatio[1]
+
                     # tarkistus onko naapuri kartan ulkopuolella
                     if naapuri_y < 0 or naapuri_y > self.korkeus-1:
                         ruutu._naapurit[naapuri] = None
                     elif naapuri_x < 0 or naapuri_x > self.leveys-1:
                         ruutu._naapurit[naapuri] = None
+
                     else:
                         ruutu._naapurit[naapuri] = self.kartta[naapuri_y][naapuri_x]
 
@@ -236,6 +252,9 @@ class Luolasto:
                             ruutu.tyyppi = 'seinä'
 
     def poista_sisallot(self):
+        """Tyhjentää ruutujen sisällöt,
+        tarvitaan visualisoinneissa
+        """
         for rivi in self.kartta:
             for ruutu in rivi:
                 ruutu.sisalto = None

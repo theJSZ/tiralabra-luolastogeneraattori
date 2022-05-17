@@ -1,7 +1,8 @@
 import os
-import random
 from time import sleep, time
 import sys
+import matplotlib.pyplot as plt
+
 from algoritmit.bsp import bsp
 from algoritmit.drunkard import drunkard
 from algoritmit.suunnattu_luola import suunnattu_luola
@@ -9,7 +10,6 @@ from luokat.huone import Huone
 from luokat.kaytavan_kaivaja import KaytavanKaivaja
 from luokat.komponenttien_etsija import KomponenttienEtsija
 from luokat.luolasto import Luolasto
-import matplotlib.pyplot as plt
 
 sys.setrecursionlimit(100000)
 
@@ -22,6 +22,15 @@ def cls():
     os.system(command)
 
 def kysy_luku(viesti: str):
+    """Kysyy syötettä annetulla viestillä kunnes
+    syöte käännetävissä kokonaisluvuksi
+
+    Args:
+        viesti (str): haluttu viesti
+
+    Returns:
+        int: syöte kokonaislukuna
+    """
     while True:
         try:
             vastaus = int(input(viesti))
@@ -63,7 +72,7 @@ while True:
         continue
 
     if komento == 'q':
-        exit()
+        sys.exit()
 
     if komento == '1':  # uusi luolasto
         cls()
@@ -82,10 +91,13 @@ while True:
         if bsp(L, 0, huoneiden_maara):
             loppu = time()
             print(f'bsp ok, aikaa meni {loppu-alku:.03f} sekuntia')
-            visualisointi = input('visualisointi k/e: ')
-            K.kaiva_kaytavat(visualisointi == 'k')
+            cls()
+            L.nayta()
+            mutkaisuus = kysy_luku('käytävien mutkaisuus (1 - 10): ')
+            visualisointi = input('käytävien visualisointi k/e: ')
+            K.kaiva_kaytavat(visualisointi == 'k', mutkaisuus)
         else:  # 100 yritystä ei tuottanut kelvollista luolastoa
-            print('ei onnistu, kokeile isommalla luolastolla')
+            print('ei onnistunut,\nkokeile vähemmillä huoneilla')
             sleep(3)
 
     if komento == '3':  # drunkard
@@ -119,7 +131,7 @@ while True:
             for i in range(1, len(L.komponentit)):
                 lahto = L.komponentit[i].kohderuutu
                 kohde = L.komponentit[i-1].kohderuutu
-                K.kaiva_kaytava(lahto[0], lahto[1], kohde[0], kohde[1], None, visualisointi=='k')
+                K.kaiva_kaytava(lahto[0], lahto[1], kohde[0], kohde[1], 9, None, visualisointi=='k')
 
             loppu = time()
             if not visualisointi == 'k':
@@ -136,89 +148,89 @@ while True:
         K = KaytavanKaivaja(L)
         etsija = KomponenttienEtsija(L)
 
-        toistot = 50
+        TOISTOT = 50
 
         # BSP
 
-        # for koko in [(i, i) for i in range(40, 1000, 10)]:
-        
-        #     print(f'luodaan {toistot} luolastoa ({koko[0]}*{koko[1]}), bsp')
+        for koko in [(i, i) for i in range(40, 1000, 10)]:
 
-        #     L = Luolasto(koko[0], koko[1])
-        #     K = KaytavanKaivaja(L)
-
-        #     aika_yht = 0
-
-        #     for _ in range(toistot):
-        #         L.tayta()
-        #         alku = time()
-        #         bsp(L, 0, 7)
-        #         loppu = time()
-        #         aika_yht += loppu-alku
-
-        #     plt.scatter(koko[0], aika_yht)
-
-        #     print(f'aika: {aika_yht} s.')
-
-        # plt.ylabel('aika (s.)')
-        # plt.xlabel('n')
-        # plt.title('BSP rooms n*n luolastolle')
-        # plt.savefig('BSP_test_50_square_dungeons.png')
-        # plt.show()
-
-
-
-        # A*
-
-        # toistot = 50
-
-        # for koko in [(i, i) for i in range(40, 200)]:
-        #     print(f'luodaan {toistot} luolastoa ({koko[0]}*{koko[1]}), A*')
-
-        #     L = Luolasto(koko[0], koko[1])
-        #     K = KaytavanKaivaja(L)
-
-        #     aika_yht = 0
-
-        #     for _ in range(toistot):
-        #         L.tayta()
-        #         H1 = Huone(1, 1, 5, 5)
-        #         H2 = Huone(koko[0]-5, koko[1]-5, 5, 5)
-        #         L.kaiva_seinallinen_huone(H1)
-        #         L.kaiva_seinallinen_huone(H2)
-        #         # etsija.etsi_komponentit()
-        #         # print(len(L.komponentit))
-
-        #         lahto = H1.keskipiste()
-        #         kohde = H2.keskipiste()
-
-        #         alku = time()
-        #         K.kaiva_kaytava(lahto[0], lahto[1], kohde[0], kohde[1], None, False)
-        #         loppu = time()
-        #         aika_yht += loppu-alku
-
-        #     plt.scatter(koko[0], aika_yht)
-        #     print(f'aika: {aika_yht:.2f} s.')
-
-        # plt.ylabel('aika (s.)')
-        # plt.xlabel('n')
-        # plt.title('A* n*n luolastolle')
-        # plt.savefig('A_star_test_50_square_dungeons.png')
-        # plt.show()
-            
-
-        # A* valmiiksi harvennetulla luolastolla
-        toistot = 50
-
-        for koko in [(i, i) for i in range(40, 200)]:
-            print(f'luodaan {toistot} luolastoa ({koko[0]}*{koko[1]}), A*')
+            print(f'luodaan {TOISTOT} luolastoa ({koko[0]}*{koko[1]}), bsp')
 
             L = Luolasto(koko[0], koko[1])
             K = KaytavanKaivaja(L)
 
             aika_yht = 0
 
-            for _ in range(toistot):
+            for _ in range(TOISTOT):
+                L.tayta()
+                alku = time()
+                bsp(L, 0, 7)
+                loppu = time()
+                aika_yht += loppu-alku
+
+            plt.scatter(koko[0], aika_yht)
+
+            print(f'aika: {aika_yht} s.')
+
+        plt.ylabel('aika (s.)')
+        plt.xlabel('n')
+        plt.title('BSP rooms n*n luolastolle')
+        plt.savefig('BSP_test_50_square_dungeons.png')
+        plt.show()
+
+
+
+        # A*
+
+        TOISTOT = 50
+
+        for koko in [(i, i) for i in range(40, 200)]:
+            print(f'luodaan {TOISTOT} luolastoa ({koko[0]}*{koko[1]}), A*')
+
+            L = Luolasto(koko[0], koko[1])
+            K = KaytavanKaivaja(L)
+
+            aika_yht = 0
+
+            for _ in range(TOISTOT):
+                L.tayta()
+                H1 = Huone(1, 1, 5, 5)
+                H2 = Huone(koko[0]-5, koko[1]-5, 5, 5)
+                L.kaiva_seinallinen_huone(H1)
+                L.kaiva_seinallinen_huone(H2)
+                # etsija.etsi_komponentit()
+                # print(len(L.komponentit))
+
+                lahto = H1.keskipiste()
+                kohde = H2.keskipiste()
+
+                alku = time()
+                K.kaiva_kaytava(lahto[0], lahto[1], kohde[0], kohde[1], 9, None, False)
+                loppu = time()
+                aika_yht += loppu-alku
+
+            plt.scatter(koko[0], aika_yht)
+            print(f'aika: {aika_yht:.2f} s.')
+
+        plt.ylabel('aika (s.)')
+        plt.xlabel('n')
+        plt.title('A* n*n luolastolle')
+        plt.savefig('A_star_test_50_square_dungeons.png')
+        plt.show()
+
+
+        # A* valmiiksi harvennetulla luolastolla
+        TOISTOT = 50
+
+        for koko in [(i, i) for i in range(40, 200)]:
+            print(f'luodaan {TOISTOT} luolastoa ({koko[0]}*{koko[1]}), A*')
+
+            L = Luolasto(koko[0], koko[1])
+            K = KaytavanKaivaja(L)
+
+            aika_yht = 0
+
+            for _ in range(TOISTOT):
                 L.tayta()
                 H1 = Huone(1, 1, 5, 5)
                 H2 = Huone(koko[0]-5, koko[1]-5, 5, 5)
@@ -231,7 +243,7 @@ while True:
                 kohde = H2.keskipiste()
 
                 alku = time()
-                K.kaiva_kaytava(lahto[0], lahto[1], kohde[0], kohde[1], None, False)
+                K.kaiva_kaytava(lahto[0], lahto[1], kohde[0], kohde[1], 9, None, False)
                 loppu = time()
                 aika_yht += loppu-alku
 
@@ -241,6 +253,6 @@ while True:
         plt.ylabel('aika (s.)')
         plt.xlabel('n')
         plt.title('A* n*n luolastolle jota kaivettu valmiiksi')
-        plt.savefig('A_star_test_50_square_dungeons_2.png')
+        plt.savefig('A_star_test_50_square_dungeons_drunkard_expensive_floors.png')
         plt.show()
             

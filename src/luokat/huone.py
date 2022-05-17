@@ -1,7 +1,9 @@
+"""Luokka huoneen muuttujille ja metodeille
+"""
 class Huone:
     """Suorakaiteen muotoinen alue luolastoa
     """
-    def __init__(self, y, x, korkeus, leveys):
+    def __init__(self, huone_y, huone_x, korkeus, leveys):
         """Luokan konstruktori
 
         Args:
@@ -10,8 +12,8 @@ class Huone:
             korkeus (int): huoneen korkeus
             leveys (int): huoneen leveys
         """
-        self._y = y
-        self._x = x
+        self._y = huone_y
+        self._x = huone_x
         self._korkeus = korkeus
         self._leveys = leveys
 
@@ -29,6 +31,11 @@ class Huone:
         return self._leveys
 
     def keskipiste(self):
+        """Palauttaa huoneen keskimmäisen ruudun
+
+        Returns:
+            tuple: y, x koordinaatit
+        """
         return (self.y+self.korkeus//2, self.x+self.leveys//2)
 
     def __lt__(self, toinen):
