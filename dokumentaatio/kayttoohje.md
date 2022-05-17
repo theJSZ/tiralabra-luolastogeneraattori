@@ -44,4 +44,9 @@ Yksikkötestit voi ajaa poetry shellin kautta:
     poetry shell
     pytest src
 
+Testikattavuuden voi nähdä poetry shellissä komennoilla
+
+    coverage run --branch -m pytest src
+    coverage report -m
+
 Ohjelman sisällä voi käynnistää suorituskykytestin. Se vie runsaasti aikaa eikä kerro mitään järin kiinnostavaa.
